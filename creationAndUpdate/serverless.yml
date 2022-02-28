@@ -1,0 +1,48 @@
+## Requerimientos:
+## serverless framework version 3
+
+## Antes de ejecutar el comando de serverless framework, es necesario autenticarse:
+##  - Linux:
+##      export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+##      export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+##      export AWS_DEFAULT_REGION=us-west-2
+##  - Windows:
+##      setx AWS_ACCESS_KEY_ID AKIAIOSFODNN7EXAMPLE
+##      setx AWS_SECRET_ACCESS_KEY wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+##      setx AWS_DEFAULT_REGION us-west-2
+
+
+                                ######################################################
+                                #### CREACIÓN Y ACTUALIZACIÓN DE LA FUNCIÓN LAMBDA ###
+                                ######################################################
+
+
+## Para crear/actualizar tanto el código como atributos de la lambda, simplemente ejecutar:
+## sls deploy
+## Toma por defecto el template serverless.yml del directorio actual
+
+service: helloWorld-sls
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.9
+  lambdaHashingVersion: 20201221
+
+package:
+  individually: true
+  exclude:
+    - "**/**"
+
+functions:
+  helloWorld:
+    name: helloWorld-sls
+    handler: lambda_function.lambda_handler
+    package:
+      patterns:
+        - lambda_function.py
+
+
+
+
