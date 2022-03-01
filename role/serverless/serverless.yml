@@ -1,5 +1,5 @@
 ## Requerimientos:
-## serverless framework version 2
+## serverless framework version 3
 
 ## Antes de ejecutar el comando de serverless framework, es necesario autenticarse:
 ##  - Linux:
@@ -21,7 +21,7 @@
 ## sls deploy
 ## Toma por defecto el template serverless.yml del directorio actual
 
-service: helloWorld-sls
+service: lambda-with-role
 
 frameworkVersion: '2'
 
@@ -29,6 +29,15 @@ provider:
   name: aws
   runtime: python3.9
   lambdaHashingVersion: 20201221
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - ec2:DescribeInstances
+            - ec2:StopInstances
+            - ec2:StartInstances
+          Resource: '*'
 
 package:
   individually: true
@@ -37,12 +46,8 @@ package:
 
 functions:
   helloWorld:
-    name: helloWorld-sls
+    name: stop_ec2_instances
     handler: lambda_function.lambda_handler
     package:
       patterns:
         - lambda_function.py
-
-
-
-
