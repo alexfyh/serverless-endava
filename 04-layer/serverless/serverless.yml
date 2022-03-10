@@ -1,0 +1,62 @@
+## Requerimientos:
+## serverless framework version 2
+
+## Antes de ejecutar el comando de serverless framework, es necesario autenticarse:
+##  - Linux:
+##      export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+##      export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+##      export AWS_DEFAULT_REGION=us-west-2
+##  - Windows:
+##      setx AWS_ACCESS_KEY_ID AKIAIOSFODNN7EXAMPLE
+##      setx AWS_SECRET_ACCESS_KEY wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+##      setx AWS_DEFAULT_REGION us-west-2
+
+
+                                ######################################################
+                                #### CREACIÓN Y ACTUALIZACIÓN DE LA FUNCIÓN LAMBDA ###
+                                ######################################################
+
+
+## Para crear/actualizar tanto el código como atributos de la lambda, simplemente ejecutar:
+## sls deploy
+## Toma por defecto el template serverless.yml del directorio actual
+
+service: lambda-with-db
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.9
+  lambdaHashingVersion: 20201221
+
+package:
+  individually: true
+  exclude:
+    - "**/**"
+
+functions:
+  MYSQLLAMBDA:
+    name: MYSQL_LAMBDA-sls
+    handler: lambda_function.lambda_handler
+    package:
+      patterns:
+        - lambda_function.py
+    environment:
+      HOST: "serverless-example.cutqeetlq6zi.us-east-1.rds.amazonaws.com"
+      USER: "alex"
+      PASSWORD: "laralara"
+      DB: "sakila"
+    layers:
+      - ${cf:mysql-layer-dev.mysqlLayerARN}
+      # - "arn:aws:lambda:us-east-1:085935842926:layer:mysql:2"
+    vpc:
+      securityGroupIds:
+        - sg-0e3ebff25dac8e134
+      subnetIds:
+        - "subnet-098fefa170d3f4fa3"
+        - "subnet-0d7fd7b4b0657e0e3"
+        - "subnet-0c8951b797ceaaa0b"
+
+
+
