@@ -1,0 +1,40 @@
+service: lambda-apigateway
+
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.9
+  lambdaHashingVersion: 20201221
+
+package:
+  individually: true
+  exclude:
+    - "**/**"
+
+functions:
+  helloWorld:
+    name: hello-api
+    handler: hello.lambda_handler
+    package:
+      patterns:
+        - hello.py
+    events: # All events associated with this function
+      - httpApi: 'GET /hello'
+
+  goodbye:
+    name: goodbye-api
+    handler: goodbye.lambda_handler
+    package:
+      patterns:
+        - goodbye.py
+    events: # All events associated with this function
+      - httpApi: 'GET /goodbye'
+
+  # authorizer:
+  #   name: authorizer-api
+  #   handler: authorizer.lambda_handler
+  #   package:
+  #     patterns:
+  #       - authorizer.py
+
