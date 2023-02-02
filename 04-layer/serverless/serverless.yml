@@ -42,21 +42,21 @@ functions:
     package:
       patterns:
         - lambda_function.py
-    environment:
-      HOST: "serverless-example.cutqeetlq6zi.us-east-1.rds.amazonaws.com"
-      USER: "alex"
-      PASSWORD: "laralara"
-      DB: "sakila"
+    # environment:
+    #   HOST: "serverless-example.cutqeetlq6zi.us-east-1.rds.amazonaws.com"
+    #   USER: "alex"
+    #   PASSWORD: "laralara"
+    #   DB: "sakila"
     layers:
-      - ${cf:mysql-layer-dev.mysqlLayerARN}
-      # - "arn:aws:lambda:us-east-1:085935842926:layer:mysql:2"
-    vpc:
-      securityGroupIds:
-        - sg-0e3ebff25dac8e134
-      subnetIds:
-        - "subnet-098fefa170d3f4fa3"
-        - "subnet-0d7fd7b4b0657e0e3"
-        - "subnet-0c8951b797ceaaa0b"
+      # - ${cf:mysql-layer-dev.mysqlLayerARN}
+      - arn:aws:lambda:us-east-1:733487994826:layer:mysql:1
+    # vpc:
+    #   securityGroupIds:
+    #     - sg-0e3ebff25dac8e134
+    #   subnetIds:
+    #     - "subnet-098fefa170d3f4fa3"
+    #     - "subnet-0d7fd7b4b0657e0e3"
+    #     - "subnet-0c8951b797ceaaa0b"
 
 
 
